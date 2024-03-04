@@ -55,6 +55,21 @@
             cursor: pointer;
         }
 
+        #clear-data-button {
+            background-color: #444;
+            border: 1px solid red;
+            border-radius: 10px;
+            padding: 5px;
+            position: absolute;
+            top: 5vh;
+            right: 5vh;
+        }
+
+        #clear-data-button:hover {
+            cursor: pointer;
+        }
+
+
         /* Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -120,7 +135,33 @@
             });
             container.append(getDataButton);
 
+            const clearDataButton = document.createElement('div');
+            clearDataButton.id = 'clear-data-button';
+            clearDataButton.textContent = 'Clear data!';
+            clearDataButton.addEventListener('click', () => {
+                clearDataFromInputs();
+            });
+            container.append(clearDataButton);
+
+
             document.body.append(container);
+        }
+
+
+        function clearDataFromInputs() {
+            const containerNumbers = document.querySelectorAll('.container-number');
+            const truckNumbers = document.querySelectorAll('.truck-number');
+
+            containerNumbers.forEach(
+                (/** @type {HTMLInputElement} */ i) => {
+                    i.value = "";
+                });
+
+            truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
+                i.value = "";
+            });
+        }
+
         function loadDataToInputs(data) {
             const containerNumbers = document.querySelectorAll('.container-number');
             const truckNumbers = document.querySelectorAll('.truck-number');
