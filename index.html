@@ -210,19 +210,19 @@
             });
 
             return data;
-        };
+        }
 
         function saveDataToLocalStorage(data) {
             const saveData = JSON.stringify(data);
 
             localStorage.setItem('save', saveData);
-        };
+        }
 
         function loadDataFromLocalStorage() {
             const saveData = localStorage.getItem('save');
 
             return JSON.parse(saveData);
-        };
+        }
 
         function composeMessage(data) {
             let message = '';
