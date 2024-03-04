@@ -44,11 +44,15 @@
             text-transform: uppercase;
         }
 
-        #gather-button {
+        #get-data-button {
             background-color: #444;
             border: 1px solid #440171;
             border-radius: 10px;
             padding: 5px;
+        }
+
+        #get-data-button:hover {
+            cursor: pointer;
         }
 
         /* Chrome, Safari, Edge, Opera */
@@ -72,10 +76,10 @@
         const endingRampNumber = 245;
 
         document.addEventListener('load', (() => {
-            const data = loadData();
+            const data = loadDataFromLocalStorage();
 
             buildPage();
-            recallData(data);
+            loadDataToInputs(data);
         })());
 
         function buildPage() {
@@ -106,20 +110,18 @@
                 container.append(rampWrapper);
             }
 
-            const gatherButton = document.createElement('div');
-            gatherButton.id = 'gather-button';
-            gatherButton.textContent = 'Procceed!';
-            gatherButton.addEventListener('click', () => {
-                const data = getData();
-                saveData(data);
+            const getDataButton = document.createElement('div');
+            getDataButton.id = 'get-data-button';
+            getDataButton.textContent = 'Compose message!';
+            getDataButton.addEventListener('click', () => {
+                const data = getDataFromInputs();
+                saveDataToLocalStorage(data);
                 copyToClipboard(composeMessage(data));
             });
-            container.append(gatherButton);
+            container.append(getDataButton);
 
             document.body.append(container);
-        };
-
-        function recallData(data) {
+        function loadDataToInputs(data) {
             const containerNumbers = document.querySelectorAll('.container-number');
             const truckNumbers = document.querySelectorAll('.truck-number');
 
@@ -138,7 +140,7 @@
             });
         }
 
-        function getData() {
+        function getDataFromInputs() {
             let data = new Object({});
             const containerNumbers = document.querySelectorAll('.container-number');
             const truckNumbers = document.querySelectorAll('.truck-number');
@@ -169,13 +171,13 @@
             return data;
         };
 
-        function saveData(data) {
+        function saveDataToLocalStorage(data) {
             const saveData = JSON.stringify(data);
 
             localStorage.setItem('save', saveData);
         };
 
-        function loadData() {
+        function loadDataFromLocalStorage() {
             const saveData = localStorage.getItem('save');
 
             return JSON.parse(saveData);
