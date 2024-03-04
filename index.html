@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ark React</title>
+    <style>
+        body {
+            margin: 0px;
+            background-color: #666;
+            height: 100dvh;
+        }
+
+        #container-main {
+            height: 100dvh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: .5em;
+        }
+
+        .ramp-entry {
+            display: flex;
+            justify-content: center;
+            gap: .5em
+        }
+
+        .container-number {
+            width: 10%;
+            text-align: center;
+            background-color: #444;
+            outline: none;
+        }
+
+        .truck-number {
+            text-align: center;
+            background-color: #444;
+            outline: none;
+        }
+
+        #gather-button {
+            background-color: #444;
+            border: 1px solid #440171;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            appearance: none;
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const startingRampNumber = 225;
+        const endingRampNumber = 245;
+
+        document.addEventListener('load', (() => {
+            const data = loadData();
+
+            buildPage();
+            recallData(data);
+        })());
+
+        function buildPage() {
+            const container = document.createElement('div');
+            container.id = 'container-main';
+
+            for (let i = startingRampNumber; i <= endingRampNumber; i++) {
+                const rampWrapper = document.createElement('div');
+                rampWrapper.classList.add('ramp-entry');
+                rampWrapper.id = i?.toString();
+
+                const rampNumber = document.createElement('span');
+                rampNumber.textContent = `Ramp ${i}`;
+                rampWrapper.append(rampNumber);
+
+                const containerNumber = document.createElement('input');
+                containerNumber.classList.add('container-number');
+                containerNumber.setAttribute('type', 'number');
+                containerNumber.setAttribute('data-ramp', i?.toString());
+                rampWrapper.append(containerNumber);
+
+                const truckNumber = document.createElement('input');
+                truckNumber.classList.add('truck-number');
+                truckNumber.setAttribute('type', 'text');
+                truckNumber.setAttribute('data-ramp', i?.toString());
+                rampWrapper.append(truckNumber);
+
+                container.append(rampWrapper);
+            }
+
+            const gatherButton = document.createElement('div');
+            gatherButton.id = 'gather-button';
+            gatherButton.textContent = 'Procceed!';
+            gatherButton.addEventListener('click', () => {
+                const data = getData();
+                saveData(data);
+                copyToClipboard(composeMessage(data));
+            });
+            container.append(gatherButton);
+
+            document.body.append(container);
+        };
+
+        function recallData(data) {
+            const containerNumbers = document.querySelectorAll('.container-number');
+            const truckNumbers = document.querySelectorAll('.truck-number');
+
+            containerNumbers.forEach(
+                (/** @type {HTMLInputElement} */ i) => {
+                    /** @type {!string} */
+                    const ramp = i.getAttribute('data-ramp');
+
+                    i.value = data[ramp]['containerNumber']?.trim() ?? "";
+                });
+
+            truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
+                const ramp = i.getAttribute('data-ramp');
+
+                i.value = data[ramp]['truckNumber']?.trim() ?? "";
+            });
+        }
+
+        function getData() {
+            let data = new Object({});
+            const containerNumbers = document.querySelectorAll('.container-number');
+            const truckNumbers = document.querySelectorAll('.truck-number');
+
+            containerNumbers.forEach(
+                (/** @type {HTMLInputElement} */ i) => {
+                    /** @type {!string} */
+                    const ramp = i.getAttribute('data-ramp');
+                    if (!data[ramp])
+                        data[ramp] = {};
+
+                    if (i.value) {
+                        data[ramp]['containerNumber'] = i.value;
+                    }
+                });
+
+            truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
+                const ramp = i.getAttribute('data-ramp');
+                if (!data[ramp]) {
+                    data[ramp] = {};
+                }
+
+                if (i.value) {
+                    data[ramp]['truckNumber'] = i.value.toUpperCase();
+                }
+            });
+
+            return data;
+        };
+
+        function saveData(data) {
+            const saveData = JSON.stringify(data);
+
+            localStorage.setItem('save', saveData);
+        };
+
+        function loadData() {
+            const saveData = localStorage.getItem('save');
+
+            return JSON.parse(saveData);
+        };
+
+        function composeMessage(data) {
+            let message = '';
+
+            for (let i = startingRampNumber; i <= endingRampNumber; i++) {
+                message += `${i} -> ${data?.[i].containerNumber ?? data?.[i].truckNumber ?? "-"}${data?.[i].containerNumber ? data?.[i].truckNumber ? ' | ' + data?.[i].truckNumber : "" : ""}\n`;
+            }
+
+            return message;
+        }
+
+        async function copyToClipboard(textToCopy) {
+            // Use the 'out of viewport hidden text area' trick
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+
+            // Move textarea out of the viewport so it's not visible
+            textArea.style.position = "absolute";
+            textArea.style.left = "-999999px";
+
+            document.body.prepend(textArea);
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+            } catch (error) {
+                console.error(error);
+            } finally {
+                textArea.remove();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
