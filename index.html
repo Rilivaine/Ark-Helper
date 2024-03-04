@@ -234,6 +234,10 @@
             return message;
         }
 
+        /*
+            This function was used because for some
+            reason `navigator.clipboard` wasn't working on mobile
+        */
         async function copyToClipboard(textToCopy) {
             // Use the 'out of viewport hidden text area' trick
             const textArea = document.createElement("textarea");
