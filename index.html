@@ -69,6 +69,17 @@
             cursor: pointer;
         }
 
+        #popup {
+            width: 10%;
+            height: 16px;
+            background-color: #444;
+            border: 1px solid red;
+            border-radius: 10px;
+            padding: 5px;
+            position: absolute;
+            inset: 50% 50%;
+            transform: translate(-50%, -50%);
+        }
 
         /* Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
@@ -132,6 +143,7 @@
                 const data = getDataFromInputs();
                 saveDataToLocalStorage(data);
                 copyToClipboard(composeMessage(data));
+                showTempPopup("Message copied!", 5_000);
             });
             container.append(getDataButton);
 
@@ -140,6 +152,7 @@
             clearDataButton.textContent = 'Clear data!';
             clearDataButton.addEventListener('click', () => {
                 clearDataFromInputs();
+                showTempPopup("Data cleared!", 5_000);
             });
             container.append(clearDataButton);
 
@@ -147,6 +160,21 @@
             document.body.append(container);
         }
 
+        function showTempPopup(text, timeInMs) {
+            const oldPopup = document.getElementById('popup');
+            if (!!oldPopup) {
+                oldPopup.remove();
+            }
+
+            const popup = document.createElement('div');
+            popup.id = 'popup';
+            popup.textContent = text;
+            document.body.append(popup);
+
+            setTimeout(() => {
+                popup.remove();
+            }, timeInMs);
+        }
 
         function clearDataFromInputs() {
             const containerNumbers = document.querySelectorAll('.container-number');
