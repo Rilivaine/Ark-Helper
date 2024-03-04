@@ -2,293 +2,301 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ark React</title>
-    <style>
-        body {
-            margin: 0px;
-            background-color: #666;
-            height: 100dvh;
-            color: #dddddd;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ark React</title>
+  <style>
+    body {
+      margin: 0px;
+      background-color: #666;
+      height: 100dvh;
+      color: #dddddd;
+    }
 
-        #container-main {
-            height: 100dvh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: .5em;
-        }
+    #container-main {
+      height: 100dvh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: .5em;
+    }
 
-        .ramp-entry {
-            display: flex;
-            justify-content: center;
-            gap: .5em
-        }
+    .ramp-entry {
+      display: flex;
+      justify-content: center;
+      gap: .5em
+    }
 
-        .container-number {
-            width: 10%;
-            text-align: center;
-            background-color: #444;
-            outline: none;
-            text-transform: uppercase;
-        }
+    .container-number {
+      width: 10%;
+      text-align: center;
+      background-color: #444;
+      outline: none;
+      text-transform: uppercase;
+      color: #dddddd;
+    }
 
-        .truck-number {
-            text-align: center;
-            background-color: #444;
-            outline: none;
-            text-transform: uppercase;
-        }
+    .truck-number {
+      text-align: center;
+      background-color: #444;
+      outline: none;
+      text-transform: uppercase;
+      color: #dddddd;
+    }
 
-        #get-data-button {
-            background-color: #444;
-            border: 1px solid #440171;
-            border-radius: 10px;
-            padding: 5px;
-        }
+    .container-number:focus,
+    .truck-number:focus {
+      border: 2px solid red;
+    }
 
-        #get-data-button:hover {
-            cursor: pointer;
-        }
+    #get-data-button {
+      background-color: #444;
+      border: 1px solid #440171;
+      border-radius: 10px;
+      padding: 5px;
+    }
 
-        #clear-data-button {
-            background-color: #444;
-            border: 1px solid red;
-            border-radius: 10px;
-            padding: 5px;
-            position: absolute;
-            top: 5vh;
-            right: 5vh;
-        }
+    #get-data-button:hover {
+      cursor: pointer;
+    }
 
-        #clear-data-button:hover {
-            cursor: pointer;
-        }
+    #clear-data-button {
+      background-color: #444;
+      border: 1px solid red;
+      border-radius: 10px;
+      padding: 5px;
+      position: absolute;
+      margin: 5px;
+      top: 0px;
+    }
 
-        #popup {
-            text-align: center;
-            font-size: 18px;
-            width: 10%;
-            height: 16px;
-            background-color: #666;
-            border: 2px solid yellowgreen;
-            border-radius: 10px;
-            padding: 5px;
-            position: absolute;
-            inset: 50% 50%;
-            transform: translate(-50%, -50%);
-        }
+    #clear-data-button:hover {
+      cursor: pointer;
+    }
 
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+    #popup {
+      text-align: center;
+      font-size: 18px;
+      width: 10%;
+      height: 16px;
+      background-color: #666;
+      border: 2px solid yellowgreen;
+      border-radius: 10px;
+      padding: 5px;
+      position: absolute;
+      inset: 50% 50%;
+      transform: translate(-50%, -50%);
+    }
 
-        /* Firefox */
-        input[type=number] {
-            appearance: none;
-            -moz-appearance: textfield;
-        }
-    </style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      appearance: none;
+      -moz-appearance: textfield;
+    }
+  </style>
 </head>
 
 <body>
-    <script>
-        const startingRampNumber = 225;
-        const endingRampNumber = 245;
+  <script>
+    const startingRampNumber = 225;
+    const endingRampNumber = 245;
 
-        document.addEventListener('load', (() => {
-            const data = loadDataFromLocalStorage();
+    document.addEventListener('load', (() => {
+      const data = loadDataFromLocalStorage();
 
-            buildPage();
-            loadDataToInputs(data);
-        })());
+      buildPage();
+      loadDataToInputs(data);
+    })());
 
-        function buildPage() {
-            const container = document.createElement('div');
-            container.id = 'container-main';
+    function buildPage() {
+      const container = document.createElement('div');
+      container.id = 'container-main';
 
-            for (let i = startingRampNumber; i <= endingRampNumber; i++) {
-                const rampWrapper = document.createElement('div');
-                rampWrapper.classList.add('ramp-entry');
-                rampWrapper.id = i?.toString();
+      for (let i = startingRampNumber; i <= endingRampNumber; i++) {
+        const rampWrapper = document.createElement('div');
+        rampWrapper.classList.add('ramp-entry');
+        rampWrapper.id = i?.toString();
 
-                const rampNumber = document.createElement('span');
-                rampNumber.textContent = `Ramp ${i}`;
-                rampWrapper.append(rampNumber);
+        const rampNumber = document.createElement('span');
+        rampNumber.textContent = `Ramp ${i}`;
+        rampWrapper.append(rampNumber);
 
-                const containerNumber = document.createElement('input');
-                containerNumber.classList.add('container-number');
-                containerNumber.setAttribute('type', 'number');
-                containerNumber.setAttribute('data-ramp', i?.toString());
-                rampWrapper.append(containerNumber);
+        const containerNumber = document.createElement('input');
+        containerNumber.classList.add('container-number');
+        containerNumber.setAttribute('type', 'number');
+        containerNumber.setAttribute('data-ramp', i?.toString());
+        rampWrapper.append(containerNumber);
 
-                const truckNumber = document.createElement('input');
-                truckNumber.classList.add('truck-number');
-                truckNumber.setAttribute('type', 'text');
-                truckNumber.setAttribute('data-ramp', i?.toString());
-                rampWrapper.append(truckNumber);
+        const truckNumber = document.createElement('input');
+        truckNumber.classList.add('truck-number');
+        truckNumber.setAttribute('type', 'text');
+        truckNumber.setAttribute('data-ramp', i?.toString());
+        rampWrapper.append(truckNumber);
 
-                container.append(rampWrapper);
-            }
+        container.append(rampWrapper);
+      }
 
-            const getDataButton = document.createElement('div');
-            getDataButton.id = 'get-data-button';
-            getDataButton.textContent = 'Compose message!';
-            getDataButton.addEventListener('click', () => {
-                const data = getDataFromInputs();
-                saveDataToLocalStorage(data);
-                copyToClipboard(composeMessage(data));
-                showTempPopup("Message copied!", 5_000);
-            });
-            container.append(getDataButton);
+      const getDataButton = document.createElement('div');
+      getDataButton.id = 'get-data-button';
+      getDataButton.textContent = 'Compose message!';
+      getDataButton.addEventListener('click', () => {
+        const data = getDataFromInputs();
+        saveDataToLocalStorage(data);
+        copyToClipboard(composeMessage(data));
+        showTempPopup("Message copied!", 5_000);
+      });
+      container.append(getDataButton);
 
-            const clearDataButton = document.createElement('div');
-            clearDataButton.id = 'clear-data-button';
-            clearDataButton.textContent = 'Clear data!';
-            clearDataButton.addEventListener('click', () => {
-                clearDataFromInputs();
-                showTempPopup("Data cleared!", 5_000);
-            });
-            container.append(clearDataButton);
+      const clearDataButton = document.createElement('div');
+      clearDataButton.id = 'clear-data-button';
+      clearDataButton.textContent = 'Clear data!';
+      clearDataButton.addEventListener('click', () => {
+        clearDataFromInputs();
+        showTempPopup("Data cleared!", 5_000);
+      });
+      container.append(clearDataButton);
 
 
-            document.body.append(container);
+      document.body.append(container);
+    }
+
+    function showTempPopup(text, timeInMs) {
+      const oldPopup = document.getElementById('popup');
+      if (!!oldPopup) {
+        oldPopup.remove();
+      }
+
+      const popup = document.createElement('div');
+      popup.id = 'popup';
+      popup.textContent = text;
+      document.body.append(popup);
+
+      setTimeout(() => {
+        popup.remove();
+      }, timeInMs);
+    }
+
+    function clearDataFromInputs() {
+      const containerNumbers = document.querySelectorAll('.container-number');
+      const truckNumbers = document.querySelectorAll('.truck-number');
+
+      containerNumbers.forEach(
+        (/** @type {HTMLInputElement} */ i) => {
+          i.value = "";
+        });
+
+      truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
+        i.value = "";
+      });
+    }
+
+    function loadDataToInputs(data) {
+      const containerNumbers = document.querySelectorAll('.container-number');
+      const truckNumbers = document.querySelectorAll('.truck-number');
+
+      containerNumbers.forEach(
+        (/** @type {HTMLInputElement} */ i) => {
+          /** @type {!string} */
+          const ramp = i.getAttribute('data-ramp');
+
+          i.value = data[ramp]['containerNumber']?.trim() ?? "";
+        });
+
+      truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
+        const ramp = i.getAttribute('data-ramp');
+
+        i.value = data[ramp]['truckNumber']?.trim() ?? "";
+      });
+    }
+
+    function getDataFromInputs() {
+      let data = new Object({});
+      const containerNumbers = document.querySelectorAll('.container-number');
+      const truckNumbers = document.querySelectorAll('.truck-number');
+
+      containerNumbers.forEach(
+        (/** @type {HTMLInputElement} */ i) => {
+          /** @type {!string} */
+          const ramp = i.getAttribute('data-ramp');
+          if (!data[ramp])
+            data[ramp] = {};
+
+          if (i.value) {
+            data[ramp]['containerNumber'] = i.value;
+          }
+        });
+
+      truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
+        const ramp = i.getAttribute('data-ramp');
+        if (!data[ramp]) {
+          data[ramp] = {};
         }
 
-        function showTempPopup(text, timeInMs) {
-            const oldPopup = document.getElementById('popup');
-            if (!!oldPopup) {
-                oldPopup.remove();
-            }
-
-            const popup = document.createElement('div');
-            popup.id = 'popup';
-            popup.textContent = text;
-            document.body.append(popup);
-
-            setTimeout(() => {
-                popup.remove();
-            }, timeInMs);
+        if (i.value) {
+          data[ramp]['truckNumber'] = i.value.toUpperCase();
         }
+      });
 
-        function clearDataFromInputs() {
-            const containerNumbers = document.querySelectorAll('.container-number');
-            const truckNumbers = document.querySelectorAll('.truck-number');
+      return data;
+    }
 
-            containerNumbers.forEach(
-                (/** @type {HTMLInputElement} */ i) => {
-                    i.value = "";
-                });
+    function saveDataToLocalStorage(data) {
+      const saveData = JSON.stringify(data);
 
-            truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
-                i.value = "";
-            });
-        }
+      localStorage.setItem('save',
+        saveData);
+    }
 
-        function loadDataToInputs(data) {
-            const containerNumbers = document.querySelectorAll('.container-number');
-            const truckNumbers = document.querySelectorAll('.truck-number');
+    function loadDataFromLocalStorage() {
+      const saveData = localStorage.getItem('save');
 
-            containerNumbers.forEach(
-                (/** @type {HTMLInputElement} */ i) => {
-                    /** @type {!string} */
-                    const ramp = i.getAttribute('data-ramp');
+      return JSON.parse(saveData);
+    }
 
-                    i.value = data[ramp]['containerNumber']?.trim() ?? "";
-                });
+    function composeMessage(data) {
+      let message = '';
 
-            truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
-                const ramp = i.getAttribute('data-ramp');
+      for (let i = startingRampNumber; i <= endingRampNumber; i++) {
+        message += `${i} -> ${data?.[i].containerNumber ?? data?.[i].truckNumber ?? "-"}${data?.[i].containerNumber ? data?.[i].truckNumber ? ' | ' + data?.[i].truckNumber: "": ""}\n`;
+      }
 
-                i.value = data[ramp]['truckNumber']?.trim() ?? "";
-            });
-        }
+      return message;
+    }
 
-        function getDataFromInputs() {
-            let data = new Object({});
-            const containerNumbers = document.querySelectorAll('.container-number');
-            const truckNumbers = document.querySelectorAll('.truck-number');
-
-            containerNumbers.forEach(
-                (/** @type {HTMLInputElement} */ i) => {
-                    /** @type {!string} */
-                    const ramp = i.getAttribute('data-ramp');
-                    if (!data[ramp])
-                        data[ramp] = {};
-
-                    if (i.value) {
-                        data[ramp]['containerNumber'] = i.value;
-                    }
-                });
-
-            truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
-                const ramp = i.getAttribute('data-ramp');
-                if (!data[ramp]) {
-                    data[ramp] = {};
-                }
-
-                if (i.value) {
-                    data[ramp]['truckNumber'] = i.value.toUpperCase();
-                }
-            });
-
-            return data;
-        }
-
-        function saveDataToLocalStorage(data) {
-            const saveData = JSON.stringify(data);
-
-            localStorage.setItem('save', saveData);
-        }
-
-        function loadDataFromLocalStorage() {
-            const saveData = localStorage.getItem('save');
-
-            return JSON.parse(saveData);
-        }
-
-        function composeMessage(data) {
-            let message = '';
-
-            for (let i = startingRampNumber; i <= endingRampNumber; i++) {
-                message += `${i} -> ${data?.[i].containerNumber ?? data?.[i].truckNumber ?? "-"}${data?.[i].containerNumber ? data?.[i].truckNumber ? ' | ' + data?.[i].truckNumber : "" : ""}\n`;
-            }
-
-            return message;
-        }
-
-        /*
+    /*
             This function was used because for some
             reason `navigator.clipboard` wasn't working on mobile
         */
-        async function copyToClipboard(textToCopy) {
-            // Use the 'out of viewport hidden text area' trick
-            const textArea = document.createElement("textarea");
-            textArea.value = textToCopy;
+    async function copyToClipboard(textToCopy) {
+      // Use the 'out of viewport hidden text area' trick
+      const textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
 
-            // Move textarea out of the viewport so it's not visible
-            textArea.style.position = "absolute";
-            textArea.style.left = "-999999px";
+      // Move textarea out of the viewport so it's not visible
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
 
-            document.body.prepend(textArea);
-            textArea.select();
+      document.body.prepend(textArea);
+      textArea.select();
 
-            try {
-                document.execCommand('copy');
-            } catch (error) {
-                console.error(error);
-            } finally {
-                textArea.remove();
-            }
-        }
-    </script>
+      try {
+        document.execCommand('copy');
+      } catch (error) {
+        console.error(error);
+      } finally {
+        textArea.remove();
+      }
+    }
+  </script>
 
 </body>
 
