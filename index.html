@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/8fe24d2298.js" crossorigin="anonymous"></script>
   <title>Ark React</title>
   <style>
     body {
@@ -102,6 +103,13 @@
       appearance: none;
       -moz-appearance: textfield;
     }
+
+    #settings-button {
+      size: 35px;
+      background-color: #444;
+      padding: 5px;
+      border-radius: 10px;
+    }
   </style>
 </head>
 
@@ -155,6 +163,19 @@
         showTempPopup("Message copied!", 5_000);
       });
       container.append(getDataButton);
+
+
+      const settingsButton = document.createElement('div');
+      settingsButton.id = 'settings-button';
+
+      const settingsIcon = document.createElement('i');
+      settingsIcon.classList.add('fa-solid');
+      settingsIcon.classList.add('fa-gears');
+      settingsButton.append(settingsIcon);
+
+      settingsButton.addEventListener('click', () => {
+      });
+      container.append(settingsButton);
 
       const clearDataButton = document.createElement('div');
       clearDataButton.id = 'clear-data-button';
