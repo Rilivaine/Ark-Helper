@@ -52,29 +52,29 @@
       border: 2px solid red;
     }
 
-    #get-data-button {
+    .button {
       background-color: #444;
-      border: 1px solid #440171;
       border-radius: 10px;
       padding: 5px;
     }
 
-    #get-data-button:hover {
+    .button:hover {
       cursor: pointer;
+    }
+
+    #get-data-button {
+      border: 1px solid #007500;
     }
 
     #clear-data-button {
-      background-color: #444;
-      border: 1px solid red;
-      border-radius: 10px;
-      padding: 5px;
-      position: absolute;
-      margin: 5px;
-      top: 0px;
+      border: 1px solid #750000;
     }
 
-    #clear-data-button:hover {
-      cursor: pointer;
+    #settings-button {
+      position: absolute;
+      size: 35px;
+      top: 10px;
+      right: 10px;
     }
 
     #popup {
@@ -102,16 +102,6 @@
     input[type=number] {
       appearance: none;
       -moz-appearance: textfield;
-    }
-
-    #settings-button {
-      position: absolute;
-      size: 35px;
-      background-color: #444;
-      padding: 5px;
-      border-radius: 10px;
-      top: 10px;
-      right: 10px;
     }
   </style>
 </head>
@@ -158,6 +148,7 @@
 
       const getDataButton = document.createElement('div');
       getDataButton.id = 'get-data-button';
+      getDataButton.classList.add('button');
       getDataButton.textContent = 'Compose message!';
       getDataButton.addEventListener('click', () => {
         const data = getDataFromInputs();
@@ -170,6 +161,7 @@
 
       const settingsButton = document.createElement('div');
       settingsButton.id = 'settings-button';
+      settingsButton.classList.add('button');
 
       const settingsIcon = document.createElement('i');
       settingsIcon.classList.add('fa-solid');
@@ -182,6 +174,7 @@
 
       const clearDataButton = document.createElement('div');
       clearDataButton.id = 'clear-data-button';
+      clearDataButton.classList.add('button');
       clearDataButton.textContent = 'Clear data!';
       clearDataButton.addEventListener('click', () => {
         clearDataFromInputs();
