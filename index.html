@@ -14,8 +14,10 @@
       color: #dddddd;
     }
 
-    #container-main {
+    #container-main,
+    #container-settings {
       height: 100dvh;
+      width: fit-content;
       position: relative;
       display: flex;
       align-items: center;
@@ -119,8 +121,12 @@
     })());
 
     function buildPage() {
-      const container = document.createElement('div');
-      container.id = 'container-main';
+      const mainContainer = document.createElement('div');
+      mainContainer.id = 'container-main';
+
+      const settingsContainer = document.createElement('div');
+      settingsContainer.id = 'container-settings';
+      settingsContainer.style.display = 'none';
 
       for (let i = startingRampNumber; i <= endingRampNumber; i++) {
         const rampWrapper = document.createElement('div');
@@ -143,7 +149,7 @@
         truckNumber.setAttribute('data-ramp', i?.toString());
         rampWrapper.append(truckNumber);
 
-        container.append(rampWrapper);
+        mainContainer.append(rampWrapper);
       }
 
       const getDataButton = document.createElement('div');
@@ -156,8 +162,7 @@
         copyToClipboard(composeMessage(data));
         showTempPopup("Message copied!", 5_000);
       });
-      container.append(getDataButton);
-
+      mainContainer.append(getDataButton);
 
       const settingsButton = document.createElement('div');
       settingsButton.id = 'settings-button';
@@ -169,8 +174,9 @@
       settingsButton.append(settingsIcon);
 
       settingsButton.addEventListener('click', () => {
+        toggleSettings();
       });
-      container.append(settingsButton);
+      document.body.append(settingsButton);
 
       const clearDataButton = document.createElement('div');
       clearDataButton.id = 'clear-data-button';
@@ -180,10 +186,23 @@
         clearDataFromInputs();
         showTempPopup("Data cleared!", 5_000);
       });
-      container.append(clearDataButton);
+      settingsContainer.append(clearDataButton);
 
+      document.body.append(settingsContainer);
+      document.body.append(mainContainer);
+    }
 
-      document.body.append(container);
+    function toggleSettings() {
+      const mainContainer = document.getElementById('container-main');
+      const settingsContainer = document.getElementById('container-settings');
+
+      if (mainContainer.style.display == 'none') {
+        mainContainer.style.display = 'inherit';
+        settingsContainer.style.display = 'none';
+      } else {
+        mainContainer.style.display = 'none';
+        settingsContainer.style.display = 'inherit';
+      }
     }
 
     function showTempPopup(text, timeInMs) {
