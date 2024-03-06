@@ -225,13 +225,13 @@
           /** @type {!string} */
           const ramp = i.getAttribute('data-ramp');
 
-          i.value = data[ramp]['containerNumber']?.trim() ?? "";
+          i.value = data?.[ramp]['containerNumber']?.trim() ?? "";
         });
 
       truckNumbers.forEach((/** @type {HTMLInputElement} */ i) => {
         const ramp = i.getAttribute('data-ramp');
 
-        i.value = data[ramp]['truckNumber']?.trim() ?? "";
+        i.value = data?.[ramp]['truckNumber']?.trim() ?? "";
       });
     }
 
