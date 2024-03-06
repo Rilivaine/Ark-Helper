@@ -10,8 +10,11 @@
     body {
       margin: 0px;
       background-color: #666;
-      height: 100dvh;
       color: #dddddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
 
     #container-main,
@@ -34,24 +37,26 @@
 
     .container-number {
       width: 10%;
-      text-align: center;
-      background-color: #444;
-      outline: none;
-      text-transform: uppercase;
-      color: #dddddd;
     }
 
+    .container-number,
     .truck-number {
       text-align: center;
       background-color: #444;
-      outline: none;
       text-transform: uppercase;
       color: #dddddd;
+
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      padding: 2px;
     }
 
     .container-number:focus,
     .truck-number:focus {
-      border: 2px solid red;
+      border: none;
+      border-bottom: 2px solid red;
+      border-width: 1px;
     }
 
     .button {
