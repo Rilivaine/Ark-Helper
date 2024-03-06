@@ -283,7 +283,7 @@
       let message = '';
 
       for (let i = startingRampNumber; i <= endingRampNumber; i++) {
-        message += `${i} -> ${data?.[i].containerNumber ?? data?.[i].truckNumber ?? "-"}${data?.[i].containerNumber ? data?.[i].truckNumber ? ' | ' + data?.[i].truckNumber: "": ""}\n`;
+        message += `${i} -> ${data?.[i].containerNumber ?? data?.[i].truckNumber ?? "-"}${data?.[i].containerNumber ? data?.[i].truckNumber ? ' | ' + data?.[i].truckNumber : "" : ""}\n`;
       }
 
       return message;
