@@ -20,8 +20,8 @@ export function buildRampsContainer() {
     rampNumber.textContent = `Ramp ${i}`;
     rampWrapper.append(rampNumber);
 
-    rampWrapper.append(createInput('container-number', i?.toString()));
-    rampWrapper.append(createInput('truck-number', i?.toString()));
+    rampWrapper.append(createInput('container-number', i?.toString(), false));
+    rampWrapper.append(createInput('truck-number', i?.toString(), true));
 
     mainContainer.append(rampWrapper);
   });
@@ -30,11 +30,11 @@ export function buildRampsContainer() {
   mainContainer.append(createDataButton());
 }
 
-function createInput(className, id, value) {
+function createInput(className, id, value, text = true) {
   const input = document.createElement('input');
   input.classList.add(className);
   input.value = value ?? '';
-  input.setAttribute('type', 'text');
+  input.setAttribute('type', text ? 'text' : 'number');
   input.setAttribute('data-ramp', id?.toString());
 
   return input;
