@@ -30,10 +30,10 @@ export function buildRampsContainer() {
   mainContainer.append(createDataButton());
 }
 
-function createInput(className, id, value, text = true) {
+function createInput(className, id, /* value, */ text = true) {
   const input = document.createElement('input');
   input.classList.add(className);
-  input.value = value ?? '';
+  //input.value = value ?? '';
   input.setAttribute('type', text ? 'text' : 'number');
   input.setAttribute('data-ramp', id?.toString());
 
