@@ -1,8 +1,4 @@
-import { loadDataFromLocalStorage, saveDataToLocalStorage } from "../data/dataOperations.js";
-import { getDataFromInputs } from "../data/rampData.js";
-import { showTempPopup } from "../utils/popup.js";
-import { copyToClipboard } from '../utils/copy.js';
-import { composeMessage } from '../utils/message.js';
+import { loadDataFromLocalStorage } from "../data/dataOperations.js";
 import { parseRawRampRange, callbackForRampRanges } from '../data/rampRange.js';
 
 export function buildRampsContainer() {
@@ -27,7 +23,6 @@ export function buildRampsContainer() {
   });
 
   document.body.append(mainContainer);
-  mainContainer.append(createDataButton());
 }
 
 function createInput(className, id, /* value, */ text = true) {
@@ -38,18 +33,4 @@ function createInput(className, id, /* value, */ text = true) {
   input.setAttribute('data-ramp', id?.toString());
 
   return input;
-}
-
-function createDataButton() {
-  const dataButton = document.createElement('div');
-  dataButton.id = 'data-button';
-  dataButton.classList.add('square-button', 'fa-regular', 'fa-clipboard');
-  dataButton.addEventListener('click', () => {
-    const data = getDataFromInputs();
-    saveDataToLocalStorage('rampsData', data);
-    copyToClipboard(composeMessage(data));
-    showTempPopup("Data copied!", 5_000);
-  });
-
-  return dataButton;
 }

@@ -1,6 +1,5 @@
 import { clearDataFromInputs } from '../data/rampData.js';
 import { showTempPopup } from '../utils/popup.js';
-import { toggleSettings } from '../utils/settings.js';
 import { saveRampRange } from '../data/rampRange.js';
 import { loadDataFromLocalStorage } from '../data/dataOperations.js';
 
@@ -22,17 +21,6 @@ export function buildSettingsContainer() {
   settingsContainer.append(createRangeInput());
 
   document.body.append(settingsContainer);
-}
-
-export function createSettingsButton() {
-  const settingsButton = document.createElement('div');
-  settingsButton.id = 'settings-button';
-  settingsButton.classList.add('square-button', 'fa-solid', 'fa-gear');
-
-  settingsButton.addEventListener('click', () => {
-    toggleSettings();
-  });
-  document.body.append(settingsButton);
 }
 
 function createRangeInput() {
